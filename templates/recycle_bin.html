@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Recycle Bin - Todo App{% endblock %}
+
+{% block content %}
+    <h1 class="mb-3">Recycle Bin</h1>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">SNo</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date Created</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if deleted_todos | length == 0 %}
+                    <tr>
+                        <td colspan="5" class="text-center">No deleted todos found.</td>
+                    </tr>
+                {% else %}
+                    {% for todo in deleted_todos %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ todo.title }}</td>
+                        <td>{{ todo.desc }}</td>
+                        <td>{{ todo.date_created }}</td>
+                        <td>
+                            <a href="/restore/{{ todo.sno }}" type="button" class="btn btn-outline-success btn-sm mx-1">Restore</a>
+                            <a href="/permanent-delete/{{ todo.sno }}" type="button" class="btn btn-outline-danger btn-sm mx-1">Permanently Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
