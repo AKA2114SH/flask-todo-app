@@ -13,6 +13,19 @@
             <label for="todoDescription" class="form-label">Todo Description</label>
             <input type="text" class="form-control" name="desc" id="todoDescription" value="{{ todo.desc }}">
         </div>
+        <div class="mb-3">
+            <label for="todoDueDate" class="form-label">Due Date</label>
+            <input type="date" class="form-control" name="due_date" id="todoDueDate" 
+                   value="{{ todo.due_date.strftime('%Y-%m-%d') if todo.due_date else '' }}">
+        </div>
+        <div class="mb-3">
+            <label for="todoPriority" class="form-label">Priority</label>
+            <select class="form-select" name="priority" id="todoPriority">
+                <option value="Low" {% if todo.priority == 'Low' %}selected{% endif %}>Low</option>
+                <option value="Medium" {% if todo.priority == 'Medium' %}selected{% endif %}>Medium</option>
+                <option value="High" {% if todo.priority == 'High' %}selected{% endif %}>High</option>
+            </select>
+        </div>
         <br>
         <button type="submit" class="btn btn-primary">Update</button>
         <a href="/" class="btn btn-secondary">Cancel</a>

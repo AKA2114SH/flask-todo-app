@@ -104,10 +104,14 @@ def update(sno):
         return redirect("/")
 
     if request.method == 'POST':
-        todo.title = request.form['title']
-        todo.desc = request.form['desc']
-        todo.due_date = datetime.strptime(request.form['due_date'], '%Y-%m-%d') if request.form['due_date'] else None
-        todo.priority = request.form['priority']
+        # Safely get form data
+        todo.title = request.form.get('title')
+        todo.desc = request.form.get('desc')
+        due_date_str = request.form.get('due_date')
+        todo.due_date = datetime.strptime(due_date_str, '%Y-%m-%d') if due_date_str else None
+        todo.priority = request.form.get('priority')
+        
+        # Save changes to the database
         db.session.commit()
         flash("Todo updated successfully!", "success")
         return redirect("/")
