@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}About - Todo App{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <!-- Header Section -->
+                <h1 class="display-4 mb-4">About Todo App</h1>
+                <p class="lead text-muted">
+                    Welcome to <strong>Todo App</strong>, your ultimate task management solution. 
+                    Stay organized, set priorities, and achieve your goals with ease.
+                </p>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="row mt-5">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-tasks fa-3x text-primary mb-3"></i>
+                        <h4 class="card-title">Task Management</h4>
+                        <p class="card-text text-muted">
+                            Add, update, and delete tasks effortlessly. Keep track of your todos in one place.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-calendar-alt fa-3x text-success mb-3"></i>
+                        <h4 class="card-title">Due Dates</h4>
+                        <p class="card-text text-muted">
+                            Set due dates for your tasks and never miss a deadline again.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-check-circle fa-3x text-warning mb-3"></i>
+                        <h4 class="card-title">Mark as Completed</h4>
+                        <p class="card-text text-muted">
+                            Mark tasks as completed and track your progress over time.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Why Choose Us Section -->
+        <div class="row mt-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="text-center mb-4">Why Choose Us?</h2>
+                <p class="text-muted text-center">
+                    Our Todo App is designed with simplicity and functionality in mind. Whether you're a student, 
+                    professional, or just someone looking to stay organized, our app is here to make your life easier.
+                </p>
+            </div>
+        </div>
+
+        <!-- Get Started Section -->
+        <div class="row mt-5">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-4">Get Started</h2>
+                <p class="lead text-muted">
+                    Ready to take control of your tasks? <a href="/signup" class="text-decoration-none">Sign up</a> now 
+                    and start managing your todos like a pro!
+                </p>
+                <a href="/signup" class="btn btn-primary btn-lg mt-3">Sign Up Now</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

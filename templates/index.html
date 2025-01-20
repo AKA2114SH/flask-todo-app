@@ -3,53 +3,88 @@
 {% block title %}Home - Todo App{% endblock %}
 
 {% block content %}
-    <!-- Todo Form -->
-    <form action="/" method="post">
-        <div class="mb-3">
-            <label for="todoTitle" class="form-label">Todo Title</label>
-            <input type="text" class="form-control" name="title" id="todoTitle" placeholder="Enter the title of your todo" required>
+    {% if not current_user.is_authenticated %}
+        <div class="alert alert-info">
+            Please <a href="/login">login</a> or <a href="/signup">signup</a> to manage your todos.
         </div>
-        <div class="mb-3">
-            <label for="todoDescription" class="form-label">Todo Description</label>
-            <input type="text" class="form-control" name="desc" id="todoDescription" placeholder="Enter the description of your todo" required>
-        </div>
-        <br>
-        <button class="btn btn-outline-primary" type="submit">Submit</button>
-    </form>
+    {% else %}
+        <!-- Add Todo Form -->
+        <form action="/add" method="post">
+            <div class="mb-3">
+                <label for="todoTitle" class="form-label">Todo Title</label>
+                <input type="text" class="form-control" name="title" id="todoTitle" required>
+            </div>
+            <div class="mb-3">
+                <label for="todoDescription" class="form-label">Todo Description</label>
+                <input type="text" class="form-control" name="desc" id="todoDescription" required>
+            </div>
+            <div class="mb-3">
+                <label for="dueDate" class="form-label">Due Date</label>
+                <input type="date" class="form-control" name="due_date" id="dueDate">
+            </div>
+            <div class="mb-3">
+                <label for="priority" class="form-label">Priority</label>
+                <select class="form-control" name="priority" id="priority">
+                    <option value="">Select Priority</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Todo</button>
+        </form>
 
-    <!-- Todo Table -->
-    <h1 class="mb-3">Todo List</h1>
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">SNo</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Date Created</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if allTodo | length == 0 %}
+        <!-- Search and Filter -->
+        <div class="my-4">
+            <form action="/filter" method="get" class="d-flex">
+                <input type="date" class="form-control me-2" name="due_date" placeholder="Filter by due date">
+                <select class="form-control me-2" name="priority">
+                    <option value="">Filter by Priority</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+                <button type="submit" class="btn btn-outline-success">Filter</button>
+            </form>
+        </div>
+
+        <!-- Todo List -->
+        <h1 class="mb-3">Todo List</h1>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
                     <tr>
-                        <td colspan="5" class="text-center">No records found.</td>
+                        <th scope="col">SNo</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Actions</th>
                     </tr>
-                {% else %}
-                    {% for todo in allTodo %}
-                    <tr>
-                        <th scope="row">{{ loop.index }}</th>
-                        <td>{{ todo.title }}</td>
-                        <td>{{ todo.desc }}</td>
-                        <td>{{ todo.date_created }}</td>
-                        <td>
-                            <a href="/update/{{ todo.sno }}" type="button" class="btn btn-outline-success btn-sm mx-1">Update</a>
-                            <a href="/delete/{{ todo.sno }}" type="button" class="btn btn-outline-danger btn-sm mx-1">Delete</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                {% endif %}
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    {% if todos | length == 0 %}
+                        <tr>
+                            <td colspan="6" class="text-center">No todos found.</td>
+                        </tr>
+                    {% else %}
+                        {% for todo in todos %}
+                        <tr>
+                            <th scope="row">{{ loop.index }}</th>
+                            <td>{{ todo.title }}</td>
+                            <td>{{ todo.desc }}</td>
+                            <td>{{ todo.due_date.strftime('%Y-%m-%d') if todo.due_date else '' }}</td>
+                            <td>{{ todo.priority }}</td>
+                            <td>
+                                <a href="/update/{{ todo.sno }}" class="btn btn-outline-success btn-sm mx-1">Update</a>
+                                <a href="/complete/{{ todo.sno }}" class="btn btn-outline-warning btn-sm mx-1">Complete</a>
+                                <a href="/delete/{{ todo.sno }}" class="btn btn-outline-danger btn-sm mx-1">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
 {% endblock %}
